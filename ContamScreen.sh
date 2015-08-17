@@ -14,6 +14,8 @@
 #files are generated as output: TAXON-good.fasta, TAXON-contam.fasta, TAXON-
 #suspect.fasta. BLAST output files can be found in the misc_intermediate_files directory.
 
+#REQUIRES BLAST, blast2table2.pl, select_contigs.pl
+
 #This program was developed by Damien S Waits and Kevin M Kocot. Version July 3rd, #2015
 
 #!/bin/bash
