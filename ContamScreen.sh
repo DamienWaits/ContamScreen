@@ -21,8 +21,8 @@
 mkdir "misc_intermediate_files"
 
 #Appends “good” to headers in the good file and writes “contam” #to headers in the contaminatant file.
-sed -i 's/^>/>good\ /' $1 > good.fasta
-sed -i 's/^>/>contam\ /' $2 > contaminated.fasta
+sed 's/^>/>good\ /' $1 > good.fasta
+sed 's/^>/>contam\ /' $2 > contaminated.fasta
 
 #Writes both good.fasta and contaminated.fasta to an all.fasta and generates a blast database since e-values are not 
 #informative across multiple blast searches.
@@ -61,7 +61,7 @@ blast2table2.pl -format 10 -evalue 0.0001 $taxon"_vs_all.txt" > $taxon"_vs_all.t
 
 #Formats e-values to allow for comparison.
 sed 's/[1-9]e-0*//' $taxon"_vs_all.table" > temp.table
-sed -i 's/0.0/0/' temp.table
+sed -i 's/0\.0/0/' temp.table
 
 #Loops through all lines in the table format of the blast output.
 while read line;
@@ -142,7 +142,7 @@ else
     suspect=false
 fi
     
-done <  $taxon"_vs_all.table"
+done <  temp.table
 
 #Writes out the name of each contig to either good or contam headers files depending on the 
 #comparisons from the above if statement.
@@ -166,8 +166,7 @@ sort suspect_headers.txt | uniq > suspect_headers_sorted.txt
 sort contam_headers.txt | uniq > contam_headers_sorted.txt
 
 #Extracts the sequences that belong to the headers in the above files.
-select_contigs.pl -n good_headers_sorted.txt $FILENAME
-$taxon"-good.fasta"
+select_contigs.pl -n good_headers_sorted.txt $FILENAME $taxon"-good.fasta"
 select_contigs.pl -n contam_headers_sorted.txt $FILENAME $taxon"-contam.fasta"
 select_contigs.pl -n suspect_headers_sorted.txt $FILENAME $taxon"-suspect.fasta"
 
