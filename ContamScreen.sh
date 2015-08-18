@@ -59,7 +59,7 @@ taxon=`echo $FILENAME | cut --delimiter=. --fields=1`
 #Performs blast search on assembly using the ALL database that includes both good and contam sequences,
 #and formats output to a table. 
 blastn -db ALL -query $FILENAME -num_descriptions 10 -num_alignments 10 -num_threads 6 > $taxon"_vs_all.txt" 
-blast2table2.pl -format 10 -evalue 0.0001 $taxon"_vs_all.txt" > $taxon"_vs_all.table"
+blast2table2.pl -format 10 -expect 0.0001 $taxon"_vs_all.txt" > $taxon"_vs_all.table"
 
 #Formats e-values to allow for comparison.
 sed 's/[1-9]e-0*//' $taxon"_vs_all.table" > temp.table
