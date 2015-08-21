@@ -128,13 +128,13 @@ else
     if [ "$perfect" != "" ]
     then
         echo "$perfectLine" >> $perfect"_headers.txt"
-    elif [ "$suspect" ]
+    elif $suspect
     then
         echo "$lastLine" >> suspect_headers.txt
-    elif [ "$currentState" == "good" ]
+    elif [ $currentState == "good" ]
     then
         echo "$lastLine" >> good_headers.txt
-    elif [ "$currentState" == "contam" ]    
+    elif [ $currentState == "contam" ]    
     then    
         echo "$lastLine" >> contam_headers.txt
     fi
@@ -142,6 +142,7 @@ else
     currentValue=`echo $line | awk '{print $2}'`
     currentState=`echo $line | awk '{print $12}'`
     suspect=false
+    perfect=""
 fi
     
 done <  temp.table
@@ -153,13 +154,13 @@ then
         echo "$perfectLine" >> $perfect"_headers.txt"
 elif  $suspect
 then
-        echo "$lastLine" >> suspect_headers.txt
+        echo "$thisLine" >> suspect_headers.txt
 elif [ $currentState == "good" ]
 then
-        echo "$lastLine" >> good_headers.txt
+        echo "$thisLine" >> good_headers.txt
 elif [ $currentState == "contam" ]
 then
-        echo "$lastLine" >> contam_headers.txt
+        echo "$thisLine" >> contam_headers.txt
 fi
 
 #Removes redundant sequence headers.
